@@ -210,8 +210,8 @@ public class CarlosVelasquez_Lab2 {
                             }
                             
                             ej.modificarSoldado(camposNuevos, modSel);
-                            
                     }
+                    break;
                 case 5:
                     batalla();
                     break;
