@@ -146,4 +146,8 @@ public class Ejercito {
         listaSoldadosAL.add(camposNuevos);
         num = listaSoldadosAL.size()-1;
     }
+
+    void removerMuertos(int remSel) {
+        listaSoldadosAL.remove(remSel);
+    }
 }

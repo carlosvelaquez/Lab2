@@ -68,7 +68,8 @@ public class CarlosVelasquez_Lab2 {
             System.out.println("[2] Listar Soldados");
             System.out.println("[3] Cambiar de Ejército");
             System.out.println("[4] Modificar Soldado");
-            System.out.println("[5] SIMULAR BATALLAS");
+            System.out.println("[5] Dar de alta a Soldado");
+            System.out.println("[6] SIMULAR BATALLAS");
             System.out.print("\n¿Que desea hacer? - ");
             int ejSel = entrada.nextInt();
             System.out.println("-   -   -   -   -   -   -   -   -   -   -   -   -");
@@ -213,6 +214,11 @@ public class CarlosVelasquez_Lab2 {
                     }
                     break;
                 case 5:
+                    System.out.print("Ingrese el numero de soldado a despedir: ");
+                    int remSel = entrada.nextInt();
+                    ej.removerMuertos(remSel);
+                    break;
+                case 6:
                     batalla();
                     break;
                 default:
