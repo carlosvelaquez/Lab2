@@ -7,9 +7,9 @@ public class Ejercito {
     String nombreEjercito;
     String[] campos, armas;
     String[][] listaSoldados;
-    int indiceEdad, indiceResistencia, indiceArma, edadMin = 25, num = 0, indicePoder;
+    int indiceEdad, indiceResistencia, indiceArma, edadMin, num = 0, indicePoder;
     int[] armasPoder;
-    ArrayList<String[]> listaSoldadosAL = new ArrayList<String[]>();
+    ArrayList<String[]> listaSoldadosAL = new ArrayList<String[]>(), listaMuertos = new ArrayList<String[]>();
     
     public Ejercito(int tipo){
         switch (tipo){
@@ -22,6 +22,7 @@ public class Ejercito {
                 indiceResistencia = 5;
                 indiceArma = 6;
                 indicePoder = 7;
+                edadMin = 18;
                 break;
             case 2:
                 campos = new String[]{"Num", "Alias", "Edad", "Casta", "Resistencia", "Tipo de Arma", "Poder de Fuego"};
@@ -32,6 +33,7 @@ public class Ejercito {
                 indiceResistencia = 4;
                 indiceArma = 5;
                 indicePoder = 6;
+                edadMin = 0;
                 break;
             case 3:
                 campos = new String[]{"Num", "Apodo", "No. Cuenta", "Edad", "Resistencia", "Grado Académico", "Tipo de Arma", "Poder de Fuego"};
@@ -42,6 +44,7 @@ public class Ejercito {
                 indiceResistencia = 4;
                 indiceArma = 6;
                 indicePoder = 7;
+                edadMin = 16;
                 break;
         }
     }
@@ -103,5 +106,38 @@ public class Ejercito {
     
     ArrayList<String[]> getListaSoldadosAL(){
         return listaSoldadosAL;
+    }
+    
+    void setListaSoldados(ArrayList<String[]> listaNueva){
+        listaSoldadosAL = listaNueva;
+    }
+    
+    boolean fueDerrotado(){
+        num = listaSoldadosAL.size() - 1;
+        if (num < 0)
+            return true;
+        return false;
+    }
+    
+    void removerMuertos(){
+        for (int i = 0; i < listaSoldadosAL.size(); i++) {
+            int res = Integer.parseInt(listaSoldadosAL.get(i)[this.getIndiceResistencia()]);
+            if (res < 1) {
+                listaMuertos.add(listaSoldadosAL.get(i));
+                listaSoldadosAL.remove(i);
+            }
+        }
+    }
+    
+    void imprimirMuertos(){
+        System.out.println("Soldados " + nombreEjercito + " caídos en batalla:");
+        
+        for (int i = 0; i < listaMuertos.size(); i++) {
+            for (int j = 0; j < listaMuertos.get(i).length; j++) {
+                System.out.print(" | " + listaMuertos.get(i)[j]);
+            }
+            System.out.println(" | ");
+        }
+        System.out.println("\n");
     }
 }

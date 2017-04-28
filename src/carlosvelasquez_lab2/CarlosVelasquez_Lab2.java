@@ -122,7 +122,7 @@ public class CarlosVelasquez_Lab2 {
                         
                         if (selRPG == true && (25 < Integer.parseInt(camposNuevos[ej.getIndiceEdad()]))) {
                             continuar = true;
-                        }else if(selRPG == false){
+                        }else if(selRPG == false && (Integer.parseInt(camposNuevos[ej.getIndiceEdad()]) > ej.getEdadMin())){
                             continuar = true;
                         }
                         else{
@@ -198,6 +198,7 @@ public class CarlosVelasquez_Lab2 {
     
     static void batalla(){
         Ejercito ej[] = new Ejercito[3];
+        int contDerrotados;
         
         for (int i = 0; true; i++) {
             switch (i){
@@ -218,23 +219,54 @@ public class CarlosVelasquez_Lab2 {
                     break;
             }
             
+            contDerrotados = 0;
+            
             for (int j = 1; j <= 2; j++) {
-                int sobrecarga = (ej[0].getNum() + 1) - (ej[j].getNum() + 1);
-                ArrayList<String[]> listaSoldados = ej[0].getListaSoldadosAL();
-                ArrayList<String[]> listaSoldadosEnem = ej[j].getListaSoldadosAL();
-                int indRes = ej[j].getIndiceResistencia();
-                int indPod = ej[0].getIndicePoder();
-                
-                System.out.println("¡Los " + ej[0].getNombreEjercito() + " están atacando a los " + ej[j].getNombreEjercito() + "!");
-                
-                for (int k = 0; k < listaSoldadosEnem.size(); k++) {
-                    listaSoldadosEnem.get(k)[indRes] = Integer.toString(Integer.parseInt(listaSoldadosEnem.get(k)[indRes]) - Integer.parseInt(listaSoldados.get(k)[indPod]));
-                }
+                if (ej[j].fueDerrotado() == false) {
+                    int sobrecarga = (ej[0].getNum() + 1) - (ej[j].getNum() + 1), sobCont = 1;
+                    ArrayList<String[]> listaSoldados = ej[0].getListaSoldadosAL();
+                    ArrayList<String[]> listaSoldadosEnem = ej[j].getListaSoldadosAL();
+                    int indRes = ej[j].getIndiceResistencia();
+                    int indPod = ej[0].getIndicePoder();
+                    int kUlt = 0;
+
+                    System.out.println("¡Los " + ej[0].getNombreEjercito() + " están atacando a los " + ej[j].getNombreEjercito() + "!");
+
+                    for (int k = 0; k < listaSoldados.size(); k++) {
+                        if (k < listaSoldadosEnem.size()) {
+                            listaSoldadosEnem.get(k)[indRes] = Integer.toString(Integer.parseInt(listaSoldadosEnem.get(k)[indRes]) - Integer.parseInt(listaSoldados.get(k)[indPod]));
+                            kUlt = k;
+                        }else{
+                            if (sobrecarga > 0) {
+                                listaSoldadosEnem.get(kUlt)[indRes] = Integer.toString(Integer.parseInt(listaSoldadosEnem.get(kUlt)[indRes]) - Integer.parseInt(listaSoldados.get(k)[indPod]));
+                            }
+                        }
+                    }
+
+                    ej[j].setListaSoldados(listaSoldadosEnem);
+                    ej[j].removerMuertos();
+                }else
+                    contDerrotados ++;
+            }
+            
+            if (contDerrotados > 1) {
+                System.out.println("¡Los " + ej[0].getNombreEjercito() + " han ganado!");
+                break;
             }
             
             if (i == 2) {
                 i = 0;
             }
+            
+        }
+        Ejercito[] ej2 = new Ejercito[3];
+        
+        ej2[0] = rusos;
+        ej2[1] = alemanes;
+        ej2[2] = alumnos;
+        
+        for (int i = 0; i < 3; i++) {
+            ej2[i].imprimirMuertos();
         }
     }
 }
