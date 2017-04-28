@@ -67,7 +67,8 @@ public class CarlosVelasquez_Lab2 {
             System.out.println("\n[1] Reclutar Soldados");
             System.out.println("[2] Listar Soldados");
             System.out.println("[3] Cambiar de Ejército");
-            System.out.println("[4] SIMULAR BATALLAS");
+            System.out.println("[4] Modificar Soldado");
+            System.out.println("[5] SIMULAR BATALLAS");
             System.out.print("\n¿Que desea hacer? - ");
             int ejSel = entrada.nextInt();
             System.out.println("-   -   -   -   -   -   -   -   -   -   -   -   -");
@@ -164,6 +165,54 @@ public class CarlosVelasquez_Lab2 {
                     rep = true;
                     break;
                 case 4:
+                    boolean selRPG = false;
+                    continuar = false;
+                    String[] campos = ej.getCampos();
+                    camposNuevos = new String[campos.length];
+                    int poderFuego;
+                        
+                    System.out.print("Ingrese el numero del soldado que quiere modificar: ");
+                    int modSel = entrada.nextInt();
+                    
+                    for (int i = 0; i < campos.length - 1; i++) {
+                            entrada = new Scanner(System.in);
+                            if (i != ej.getIndiceResistencia() && i != 0) {
+                                System.out.print("Ingresar " + campos[i]);
+                                if (i == ej.getIndiceArma()) {
+                                    System.out.println("\nArmamento Disponible:\n");
+
+                                    String[] armas = ej.getArmas();
+                                    int[] armasPoder = ej.getArmasPoder();
+
+                                    for (int j = 0; j < armas.length; j++) {
+                                        System.out.println("[" + (j+1) + "] " + armas[j] + " | Poder de Fuego: " + armasPoder[j]);
+                                    }
+                                    System.out.print("Seleccione un arma: ");
+                                    int armaSel = entrada.nextInt();
+                                    
+                                    if ("RPG-7".equals(armas[2]) && armaSel == 3) {
+                                        selRPG = true;
+                                    }
+                                    
+                                    camposNuevos[i] = armas[armaSel-1];
+                                    camposNuevos[i + 1] = Integer.toString(armasPoder[armaSel - 1]);
+                                }else{
+                                    System.out.print(": ");
+                                    camposNuevos[i] = entrada.nextLine();
+                                }
+                            }else if (i == 0){
+                                camposNuevos[i] = Integer.toString(ej.getNum() + 1);
+                                System.out.println("Reclutando el soldado numero " + (ej.getNum() + 1) + ".");
+                            }else{
+                                System.out.println("\nEl soldado tendrá una resistencia de " + (8*(Integer.parseInt((camposNuevos[(ej.getIndiceEdad())])))));
+                                camposNuevos[i] = Integer.toString((8*(Integer.parseInt((camposNuevos[(ej.getIndiceEdad())])))));
+                                System.out.println("");
+                            }
+                            
+                            ej.modificarSoldado(camposNuevos, modSel);
+                            
+                    }
+                case 5:
                     batalla();
                     break;
                 default:

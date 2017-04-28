@@ -140,4 +140,10 @@ public class Ejercito {
         }
         System.out.println("\n");
     }
+
+    void modificarSoldado(String[] camposNuevos, int modSel) {
+        System.out.println(modSel);
+        //listaSoldadosAL.get(modSel) = camposNuevos;
+        num = listaSoldadosAL.size()-1;
+    }
 }
