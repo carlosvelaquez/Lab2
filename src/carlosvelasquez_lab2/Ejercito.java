@@ -148,6 +148,6 @@ public class Ejercito {
     }
 
     void removerMuertos(int remSel) {
-        listaSoldadosAL.remove(remSel);
+        listaSoldadosAL.remove(remSel-1);
     }
 }
